@@ -1,0 +1,15 @@
+{
+  "name": "mern",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Mohammed Abatalib",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.24",
+    "mongoose-type-email": "^1.0.12",
+    "mongoose-type-url": "^2.0.0",
+    "nodemon": "^2.0.4"
+  }
+}
