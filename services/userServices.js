@@ -27,19 +27,25 @@ module.exports = {
         }
     },
 
-   addUser(newUser){
+   async addUser(newUser){
        try {
-           return newUser
-        //    return User.insertMany([{
-        //        username: newUser.username, 
-        //        gender: newUser.gender, 
-        //        news: newUser.news, 
-        //        email: newUser.email, 
-        //        photo: newUser.photo, 
-        //        dob: newUser.dob
-        //     }])
+            if(!await User.findOne({username: newUser.username})){
+                const rslt = await User.insertMany([{
+                    username: newUser.username, 
+                    gender: newUser.gender, 
+                    news: newUser.news, 
+                    email: newUser.email, 
+                    photo: newUser.photo, 
+                    dob: newUser.dob
+                    }])
+                
+                    return ({resultat: null})
+            } else {
+                return ({resultat: 'Usager existe déjà!'})
+            }
+
         } catch(error) {
-            return {message: error.message}
+            return {resultat: error.message}
         }
     },
 

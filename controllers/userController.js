@@ -86,25 +86,38 @@ module.exports = {
     
    async addUser(req, res){
         const user = req.body;
+        
         let msg;
         try {
             if (user.username && user.gender && user.dob){
-                const newUser = await userService.addUser(user);
 
-                msg = {
-                    results: "Usager ajouté"
-                };
+                const newUser = await userService.addUser(user);
+                
+                switch (newUser['resultat']) {
+                    case null:
+                        msg = {
+                            results: 'Usager ajouté!',
+                            status: 200
+                        }
+                      break;
+                    default:
+                        msg = {
+                            results: newUser['resultat'],
+                            status: 400
+                        }
+                  } 
             }else{
                 msg = {
-                    results: "Usager non ajouté!",
+                    results: 'Usager non ajouté!',
+                    status: 400
                 };
             }
-            res.json(msg);
+            res.json(msg)
             
         } catch (error) {
             res.status(400).json({
                 status: 400,
-                results: error.message
+                results: newUser
             })
         }
     },
@@ -149,23 +162,23 @@ module.exports = {
     },
     
     async removeUser(req, res){
-         const user = req.body;
+         const id = req.params.id;
          let msg;
          try {
-             if (user.id){
-                 const results = await userService.removeUser(user.id);
-                 results['n'] == '1' 
+             if (id){
+                 const deleted = await userService.removeUser(id);
+                 deleted['n'] == '1' 
                  ?
                     msg = {
-                        results: "usager supprimé"
+                        results: "Usager supprimé"
                     }
                  :
                     msg = {
-                        results: "usager introuvable"
+                        results: "Usager introuvable"
                     }
              }else{
                  msg = {
-                    results: "Aucun usager n'a été sélectionné!"
+                    results: "Aucun id n'a été sélectionné!"
                  };
              }
  
