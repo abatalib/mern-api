@@ -126,37 +126,36 @@ module.exports = {
         const user = req.body;
         let msg;
         try {
-            if (user.username && user.gender && user.dob){
+            if (user.id && user.gender && user.dob && user.email){
                 const results = await userService.updateUser(
                     user.id, 
-                    user.username, 
                     user.gender, 
-                    user.dob, 
-                    user.news, 
-                    user.photo, 
-                    user.photoLg, 
+                    user.dob,  
                     user.email);
                 
                 results['message'] ?
                     msg = {
-                        results: results['message']
+                        results: results['message'],
+                        status: 400
                     }
                 :
                     msg = {
-                        results: "Usager mis à jour!"
+                        results: "Usager mis à jour!",
+                        status: 200
                     }
 
             }else{
                 msg = {
-                    message: "Usager non mis à jour!"
+                    results: "Usager non mis à jour!",
+                    status: 400
                 };
             }
-
             res.json(msg);
 
         } catch (error) {
             res.status(400).json({
-                message: error.message
+                status: 400,
+                results: error.message
             })
         }
     },
@@ -170,15 +169,18 @@ module.exports = {
                  deleted['n'] == '1' 
                  ?
                     msg = {
-                        results: "Usager supprimé"
+                        results: "Usager supprimé",
+                        status: 200
                     }
                  :
                     msg = {
-                        results: "Usager introuvable"
+                        results: deleted['message'],
+                        status: 400
                     }
              }else{
                  msg = {
-                    results: "Aucun id n'a été sélectionné!"
+                    results: "Aucun id n'a été sélectionné!",
+                    status: 400
                  };
              }
  
@@ -186,7 +188,8 @@ module.exports = {
  
          } catch (error) {
              res.status(400).json({
-                message: error.message
+                results: error.message,
+                status: 400
              })
          }
      },

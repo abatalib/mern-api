@@ -30,6 +30,10 @@ const usersSchema = new mongoose.Schema({
     photo: {
         type: mongoose.SchemaTypes.Url,
         required: false
+    },
+    photoLg: {
+        type: mongoose.SchemaTypes.Url,
+        required: false
     }
 }, {
     timestamps: true

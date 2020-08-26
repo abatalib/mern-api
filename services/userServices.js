@@ -36,6 +36,7 @@ module.exports = {
                     news: newUser.news, 
                     email: newUser.email, 
                     photo: newUser.photo, 
+                    photoLg: newUser.photoLg, 
                     dob: newUser.dob
                     }])
                 
@@ -49,12 +50,11 @@ module.exports = {
         }
     },
 
-   updateUser(id, username, gender, dob, news, photo, photoLg, email){
+   updateUser(id, gender, dob, email){
        try { 
-            news = news || 'false';
             //findByIdAndUpdate : 1er param c'est le critère de recherche (id) le 2eme objet représente les nvelles info username: username, etc
             // mongoose.set('useFindAndModify', true);
-           return User.findByIdAndUpdate({_id: id},{username, gender, dob, news, photo, photoLg, email})
+           return User.findByIdAndUpdate({_id: id},{gender, dob, email})
         } catch(error) {
             return {message: error.message }
         }
