@@ -1,2 +1,2 @@
 # mern-api
-ExpresJs
+ExpressJs
